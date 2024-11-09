@@ -32,6 +32,12 @@ importers:
       '@angular/router':
         specifier: ^18.1.1
         version: 18.1.1(@angular/common@18.1.1(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2))(rxjs@7.8.1))(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2))(@angular/platform-browser@18.1.1(@angular/animations@18.1.1(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2)))(@angular/common@18.1.1(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2))(rxjs@7.8.1))(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2)))(rxjs@7.8.1)
+      '@ng-icons/core':
+        specifier: ^29.5.1
+        version: 29.5.1(@angular/common@18.1.1(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2))(rxjs@7.8.1))(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2))(rxjs@7.8.1)
+      '@ng-icons/lucide':
+        specifier: ^29.5.1
+        version: 29.5.1
       rxjs:
         specifier: ~7.8.0
         version: 7.8.1
@@ -1605,6 +1611,16 @@ packages:
     resolution: {integrity: sha512-x0fWaQtYp4E6sktbsdAqnehxDgEc/VwM7uLsRCYWaiGu0ykYdZPiS8zCWdnjHwyiumousxfBm4SO31eXqwEZhQ==}
     cpu: [x64]
     os: [win32]
+
+  '@ng-icons/core@29.5.1':
+    resolution: {integrity: sha512-wPpNqgoAlbJ0QAxfH2EAfT10ohtwXLQSXoWQ4a1tEhqXOn5kUAA8MqGgl5kILkiVCd8vvvPckLrt84LXQPWVCQ==}
+    peerDependencies:
+      '@angular/common': '>=18.0.0'
+      '@angular/core': '>=18.0.0'
+      rxjs: ^6.5.3 || ^7.4.0
+
+  '@ng-icons/lucide@29.5.1':
+    resolution: {integrity: sha512-PL7lK1BxTzpe7kMCbFK85jOOQG+VGi0pcNShan429c1M0tOVJ9M7O1XuaFIkuq2yZZ5KKOphT0vwz3CDI4wPNg==}
 
   '@ngtools/webpack@18.1.1':
     resolution: {integrity: sha512-mjlfnWcHtBZJUJaVyffJZZL8U1o1XUQwrFIKeiFUeatLDsjtv8EbLW9Ed1v3eAJyVuaTNKpsdZma1XdxzeLONw==}
@@ -7077,6 +7093,17 @@ snapshots:
   '@msgpackr-extract/msgpackr-extract-win32-x64@3.0.3':
     optional: true
 
+  '@ng-icons/core@29.5.1(@angular/common@18.1.1(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2))(rxjs@7.8.1))(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2))(rxjs@7.8.1)':
+    dependencies:
+      '@angular/common': 18.1.1(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2))(rxjs@7.8.1)
+      '@angular/core': 18.1.1(rxjs@7.8.1)(zone.js@0.14.2)
+      rxjs: 7.8.1
+      tslib: 2.6.3
+
+  '@ng-icons/lucide@29.5.1':
+    dependencies:
+      tslib: 2.6.3
+
   '@ngtools/webpack@18.1.1(@angular/compiler-cli@18.1.1(@angular/compiler@18.1.1(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2)))(typescript@5.5.4))(typescript@5.5.4)(webpack@5.92.1(esbuild@0.21.5))':
     dependencies:
       '@angular/compiler-cli': 18.1.1(@angular/compiler@18.1.1(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.2)))(typescript@5.5.4)
@@ -8948,7 +8975,7 @@ snapshots:
 
   injection-js@2.4.0:
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.6.3
 
   ip@2.0.0: {}
 

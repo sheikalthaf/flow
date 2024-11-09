@@ -51,7 +51,7 @@ describe('FlowComponent', () => {
     component.flow.isDraggingZoomContainer = true;
     component._dragZoomContainer(ev);
     expect(component.zoomContainer.nativeElement.style.transform).toEqual(
-      'translate3d(11px, 11px, 0) scale(1)'
+      'translate3d(11px, 11px, 0) scale(1)',
     );
   });
 
@@ -70,9 +70,9 @@ describe('FlowComponent', () => {
     const ev = new WheelEvent('wheel', {
       deltaY: -1,
     });
-    component.zoomHandle(ev);
+    component['zoomHandle'](ev);
     expect(component.zoomContainer.nativeElement.style.transform).toEqual(
-      'translate3d(0px, 0px, 0) scale(1.05)'
+      'translate3d(0px, 0px, 0) scale(1.05)',
     );
   });
 });

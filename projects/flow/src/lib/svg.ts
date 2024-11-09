@@ -50,7 +50,7 @@ export const blendCorners1: ArrowPathFn = (
   start,
   end,
   arrowSize,
-  strokeWidth
+  strokeWidth,
 ) => {
   // include the arrow size
   let { x: startX, y: startY } = start;
@@ -68,7 +68,7 @@ export const blendCorners: ArrowPathFn = (
   start,
   end,
   arrowSize,
-  strokeWidth
+  strokeWidth,
 ) => {
   let { x: startX, y: startY, dotIndex: startDotIndex } = start;
   let { x: endX, y: endY, dotIndex: endDotIndex } = end;
@@ -98,13 +98,14 @@ export const blendCorners: ArrowPathFn = (
 
 function getDirectionAdjustment(
   dotIndex: number,
-  arrowSize: number
+  arrowSize: number,
 ): {
   x: number;
   y: number;
   cpX: number;
   cpY: number;
 } {
+  console.log(arrowSize);
   // 'controlPointDistance' is a new property to be defined. It determines how 'curvy' the path should be.
   // Adjust this value to increase or decrease the curvature of the Bezier path.
   let controlPointDistance = 50;

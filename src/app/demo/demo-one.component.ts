@@ -39,8 +39,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
       ></app-toolbar>
       <select [formControl]="selectedNode">
         <label>Select node</label>
-        @for (item of list; track item.id; ) {
-        <option [value]="item.id">{{ item.id }}</option>
+        @for (item of list; track item.id) {
+          <option [value]="item.id">{{ item.id }}</option>
         }
       </select>
       <ngu-flow
@@ -48,21 +48,21 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
         [config]="config"
       >
         @for (item of list; track item.id; let i = $index) {
-        <div
-          class="card flex items-center justify-center w-[250px] h-[60px] bg-white"
-          [flowChild]="item"
-        >
-          <!-- <app-editor></app-editor> -->
-
           <div
-            class="pointer-events-none flex items-center justify-center w-7 h-7 mr-6 bg-gray-200 rounded-full"
+            class="card flex items-center justify-center w-[250px] h-[60px] bg-white"
+            [flowChild]="item"
           >
-            {{ item.id }}
+            <!-- <app-editor></app-editor> -->
+
+            <div
+              class="pointer-events-none flex items-center justify-center w-7 h-7 mr-6 bg-gray-200 rounded-full"
+            >
+              {{ item.id }}
+            </div>
+            <button (click)="demoService.addNode(item, list)">Add</button>
+            <button (click)="deleteNode(item.id)">Delete</button>
+            <!-- <button (click)="startLinking(i)">Link</button> -->
           </div>
-          <button (click)="demoService.addNode(item, list)">Add</button>
-          <button (click)="deleteNode(item.id)">Delete</button>
-          <!-- <button (click)="startLinking(i)">Link</button> -->
-        </div>
         }
       </ngu-flow>
     </div>
@@ -92,9 +92,9 @@ export class DemoOneComponent implements AfterViewInit {
     arrange: new Arrangements(),
   };
   config: FlowConfig = {
-    Arrows: true,
-    ArrowSize: 20,
-    Plugins: this.plugins,
+    arrows: true,
+    arrowSize: 20,
+    plugins: this.plugins,
   };
 
   selectedNode = new FormControl<string>('11', { nonNullable: true });

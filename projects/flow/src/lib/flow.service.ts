@@ -7,14 +7,13 @@ import { FlowConfig } from './plugins/plugin';
 @Injectable()
 export class FlowService {
   readonly items = new Map<string, FlowOptions>();
-  readonly config = new FlowConfig();
+  config = new FlowConfig();
   arrowsChange = new Subject<FlowOptions>();
   deps = new Map<string, string[]>();
   isDraggingZoomContainer: boolean;
   isChildDragging: boolean;
   enableChildDragging = new BehaviorSubject(true);
   enableZooming = new BehaviorSubject(true);
-  direction: FlowDirection = 'horizontal';
   horizontalPadding = 100;
   verticalPadding = 20;
   groupPadding = 40;

@@ -74,7 +74,7 @@ export class FlowChildComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     public el: ElementRef<HTMLDivElement>,
     private flow: FlowService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
   ) {
     this.el.nativeElement.style.position = 'absolute';
     this.el.nativeElement.style.transformOrigin = '0, 0';
@@ -125,12 +125,12 @@ export class FlowChildComponent implements OnInit, OnChanges, OnDestroy {
       const x =
         Math.round(
           (cx - this.flow.panX - this.offsetX) /
-            (this.flow.gridSize * this.flow.scale)
+            (this.flow.gridSize * this.flow.scale),
         ) * this.flow.gridSize;
       const y =
         Math.round(
           (cy - this.flow.panY - this.offsetY) /
-            (this.flow.gridSize * this.flow.scale)
+            (this.flow.gridSize * this.flow.scale),
         ) * this.flow.gridSize;
 
       this.position.x = x;

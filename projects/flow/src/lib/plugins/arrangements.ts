@@ -38,7 +38,7 @@ export class Arrangements implements FlowPlugin {
 
   public _autoArrange(): Map<string, FlowOptions> {
     this.list = this.data.list;
-    this.direction = this.data.flow.direction;
+    this.direction = this.data.flow.config.direction!;
     this.horizontalPadding = this.data.flow.horizontalPadding;
     this.verticalPadding = this.data.flow.verticalPadding;
     this.groupPadding = this.data.flow.groupPadding;
@@ -63,7 +63,7 @@ export class Arrangements implements FlowPlugin {
 
     for (const id of this.root) {
       const node = ROOT_DATA.get(id)!;
-      node.arrange(0, 0, this.direction);
+      node?.arrange(0, 0, this.direction);
     }
 
     const newItems = new Map<string, FlowOptions>();

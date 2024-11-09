@@ -1,10 +1,15 @@
+import { FlowDirection } from '../flow-interface';
 import { FlowComponent } from '../flow.component';
 
 export class FlowConfig {
-  Arrows = true;
-  ArrowSize = 20;
-  Plugins: { [x: string]: FlowPlugin } = {};
+  arrows = true;
+  arrowSize = 20;
+  strokeWidth? = 2;
+  plugins: FlowPlugins = {};
+  direction?: FlowDirection = 'horizontal';
 }
+
+export type FlowPlugins = Record<string, FlowPlugin>;
 
 export interface FlowPlugin {
   onInit?(data: FlowComponent): void;

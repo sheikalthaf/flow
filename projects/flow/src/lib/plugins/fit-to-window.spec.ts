@@ -130,14 +130,14 @@ describe('FitToWindow', () => {
       840,
       0.7476,
       121,
-      135
+      135,
     );
     expect(panX).toBe(-29.176000000000016);
     expect(panY).toBe(-38.867200000000004);
   });
 
   it('should return pan and scale values', () => {
-    const { scale, panX, panY } = fitToWindow._updateValue();
+    const { scale, panX, panY } = fitToWindow['updateValue']();
     expect(scale).toBe(0.7476190476190476);
     expect(panX).toBe(-29.19047619047616);
     expect(panY).toBe(-38.876190476190494);

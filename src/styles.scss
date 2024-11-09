@@ -3,8 +3,58 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply antialiased;
+}
+
 body {
-  margin: 0;
+  @apply min-h-screen bg-foreground text-sm text-text;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+* {
+  @apply border-border;
+}
+
+:root {
+  font-family: Inter, sans-serif;
+  font-feature-settings:
+    'liga' 1,
+    'calt' 1; /* fix for Chrome */
+  --primary: 118, 6, 243;
+  --background: 246, 247, 251;
+  --foreground: 255, 255, 255;
+  --muted: 113, 113, 122; // 75, 85, 99;
+  --muted-background: 231, 231, 231; // 244, 244, 245;
+  --text: 9, 9, 11;
+  --border: 228, 228, 231;
+  --input: 243, 244, 246;
+  --density: 1;
+  --radius: 0.5rem; // 0.375rem;
+  --spacing-base: 0.25rem;
+  --spacing-baseY: 0.25rem;
+}
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}
+.dark {
+  --primary: 250, 250, 250;
+  --muted: 161, 161, 170;
+  --muted-background: 39, 39, 42;
+  --text: 250, 250, 250;
+  --background: 21, 21, 24;
+  --foreground: 0, 0, 0;
+  --border: 39, 39, 42;
+  --input: 39, 39, 42;
+  color-scheme: dark;
+}
+
+.small {
+  --spacing-base: 0.125rem;
+  @apply text-sm;
 }
 
 @keyframes dash {
@@ -20,4 +70,13 @@ body {
   stroke-dasharray: 5, 5; /* You can adjust these values to control the appearance of the dashes (dots) */
   stroke-dashoffset: 5;
   animation: dash 4s linear reverse infinite; /* The 'infinite' value will make the animation repeat indefinitely */
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://unpkg.com/geist@1.3.0/dist/fonts/geist-mono/GeistMono-Medium.woff2')
+    format('woff2');
 }

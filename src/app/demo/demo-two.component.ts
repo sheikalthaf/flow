@@ -40,35 +40,35 @@ import { DemoService } from './demo.service';
         [config]="config"
       >
         @for (item of list; track item.id; let i = $index) {
-        <div
-          class="card flex flex-col w-[250px] bg-white rounded-2xl"
-          [flowChild]="item"
-        >
-          <div class="bg-slate-100 border-b">
-            <div
-              class="pointer-events-none flex items-center justify-center w-7 h-7 mr-6"
-            >
-              {{ item.id }}
+          <div
+            class="card flex flex-col w-[250px] bg-white rounded-2xl"
+            [flowChild]="item"
+          >
+            <div class="bg-slate-100 border-b">
+              <div
+                class="pointer-events-none flex items-center justify-center w-7 h-7 mr-6"
+              >
+                {{ item.id }}
+              </div>
+            </div>
+            <p class="p-4">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. In alias
+              porro ratione quis dolore laboriosam eveniet vel hic beatae eaque
+              iste, neque quos, odit, explicabo nulla corporis iusto asperiores
+              sequi!
+            </p>
+            <div class="p-4 flex gap-2">
+              <button
+                (click)="demoService.addNode(item, list)"
+                class="text-green-500"
+              >
+                Add
+              </button>
+              <button (click)="deleteNode(item.id)" class="text-red-400">
+                Delete
+              </button>
             </div>
           </div>
-          <p class="p-4">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. In alias
-            porro ratione quis dolore laboriosam eveniet vel hic beatae eaque
-            iste, neque quos, odit, explicabo nulla corporis iusto asperiores
-            sequi!
-          </p>
-          <div class="p-4 flex gap-2">
-            <button
-              (click)="demoService.addNode(item, list)"
-              class="text-green-500"
-            >
-              Add
-            </button>
-            <button (click)="deleteNode(item.id)" class="text-red-400">
-              Delete
-            </button>
-          </div>
-        </div>
         }
       </ngu-flow>
     </div>
@@ -102,9 +102,9 @@ export class DemoTwoComponent implements AfterViewInit {
     arrange: new Arrangements(),
   };
   config: FlowConfig = {
-    Arrows: true,
-    ArrowSize: 20,
-    Plugins: this.plugins,
+    arrows: true,
+    arrowSize: 20,
+    plugins: this.plugins,
   };
 
   constructor() {

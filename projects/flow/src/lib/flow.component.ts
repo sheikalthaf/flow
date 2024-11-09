@@ -36,16 +36,18 @@ const BASE_SCALE_AMOUNT = 0.05;
   template: ` <div class="zoom-container" #zoomContainer>
     <svg #svg>
       <defs>
-        <marker
-          id="arrowhead"
-          markerWidth="10"
-          markerHeight="7"
-          refX="0"
-          refY="3.5"
-          orient="auto"
-        >
-          <polygon points="0 0, 10 3.5, 0 7"></polygon>
-        </marker>
+        @if (config.arrows) {
+          <marker
+            id="arrowhead"
+            markerWidth="10"
+            markerHeight="7"
+            refX="0"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7"></polygon>
+          </marker>
+        }
       </defs>
       <g #g></g>
       <!-- <g #guideLines></g> -->
@@ -143,26 +145,28 @@ export class FlowComponent
   constructor(
     public el: ElementRef<HTMLElement>,
     public flow: FlowService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
     this.flow.zoomContainer = this.el.nativeElement;
+    this.config = { ...new FlowConfig(), ...this.config };
+    this.flow.config = this.config;
     this.flow.arrowsChange.subscribe((e) => this.updateArrows(e));
     this.ngZone.runOutsideAngular(() => {
       this.el.nativeElement.addEventListener('wheel', this._wheelPanning);
 
       this.el.nativeElement.addEventListener(
         'mousedown',
-        this._startDraggingZoomContainer
+        this._startDraggingZoomContainer,
       );
       this.el.nativeElement.addEventListener(
         'mouseup',
-        this._stopDraggingZoomContainer
+        this._stopDraggingZoomContainer,
       );
       this.el.nativeElement.addEventListener(
         'mousemove',
-        this._dragZoomContainer
+        this._dragZoomContainer,
       );
     });
   }
@@ -176,9 +180,9 @@ export class FlowComponent
     for (const plug of this.defaultPlugins) {
       callback(plug);
     }
-    for (const key in this.config.Plugins) {
-      if (Object.prototype.hasOwnProperty.call(this.config.Plugins, key)) {
-        const element = this.config.Plugins[key];
+    for (const key in this.config.plugins) {
+      if (Object.prototype.hasOwnProperty.call(this.config.plugins, key)) {
+        const element = this.config.plugins[key];
         callback(element);
       }
     }
@@ -204,7 +208,7 @@ export class FlowComponent
   }
 
   updateDirection(direction: FlowDirection) {
-    this.flow.direction = direction;
+    this.flow.config.direction = direction;
     this.runPlugin((e) => e.beforeUpdate?.(this));
     this.createArrows();
   }
@@ -249,7 +253,17 @@ export class FlowComponent
     }
   };
 
-  public zoomHandle = (event: WheelEvent) => {
+  // zoom in should be center on the screen
+  zoomIn() {
+    // we have to consider the center of the zrect respective to viewport
+    this.setZoom1(this.flow.zRect.width / 2, this.flow.zRect.height / 2, 1);
+  }
+
+  zoomOut() {
+    this.setZoom1(this.flow.zRect.width / 2, this.flow.zRect.height / 2, -1);
+  }
+
+  private zoomHandle = (event: WheelEvent) => {
     if (this.flow.isDraggingZoomContainer || this.flow.isChildDragging) return;
     event.stopPropagation();
     event.preventDefault();
@@ -268,7 +282,7 @@ export class FlowComponent
       scaleDirection,
       this.flow.panX,
       this.flow.panY,
-      this.flow.scale
+      this.flow.scale,
     );
     this.flow.scale = scale;
     this.flow.panX = panX;
@@ -284,7 +298,7 @@ export class FlowComponent
     scaleDirection: number,
     panX: number,
     panY: number,
-    scale: number
+    scale: number,
   ) {
     // Make scaleAmount proportional to the current scale
     const scaleAmount = BASE_SCALE_AMOUNT * scale;
@@ -352,12 +366,15 @@ export class FlowComponent
           // Create path element and set attributes
           const pathElement = document.createElementNS(
             'http://www.w3.org/2000/svg',
-            'path'
+            'path',
           );
           pathElement.setAttribute('d', arrow.d);
           pathElement.setAttribute('id', arrow.id);
           pathElement.setAttribute('stroke', 'var(--flow-path-color)');
-          pathElement.setAttribute('stroke-width', '2');
+          pathElement.setAttribute(
+            'stroke-width',
+            this.config.strokeWidth!.toString(),
+          );
           pathElement.setAttribute('fill', 'none');
           pathElement.setAttribute('marker-end', 'url(#arrowhead)');
 
@@ -393,17 +410,23 @@ export class FlowComponent
   }
 
   oldChildObj() {
-    return this.children.toArray().reduce((acc, curr) => {
-      acc[curr.position.id] = curr;
-      return acc;
-    }, {} as Record<string, FlowChildComponent>);
+    return this.children.toArray().reduce(
+      (acc, curr) => {
+        acc[curr.position.id] = curr;
+        return acc;
+      },
+      {} as Record<string, FlowChildComponent>,
+    );
   }
 
   getChildInfo() {
-    return this.list.reduce((acc, curr) => {
-      acc[curr.position.id] = curr;
-      return acc;
-    }, {} as Record<string, ChildInfo>);
+    return this.list.reduce(
+      (acc, curr) => {
+        acc[curr.position.id] = curr;
+        return acc;
+      },
+      {} as Record<string, ChildInfo>,
+    );
   }
 
   ngOnDestroy(): void {

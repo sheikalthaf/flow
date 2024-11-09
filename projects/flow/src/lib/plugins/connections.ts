@@ -33,7 +33,7 @@ export class Connections implements FlowPlugin {
       if (fromItem && toItem) {
         const [endDotIndex, startDotIndex] = this.getClosestDotsSimplified(
           toItem,
-          from
+          from,
         );
 
         const startDot = this.getDotByIndex(
@@ -42,7 +42,7 @@ export class Connections implements FlowPlugin {
           startDotIndex,
           this.data.flow.scale,
           this.data.flow.panX,
-          this.data.flow.panY
+          this.data.flow.panY,
         );
         const endDot = this.getDotByIndex(
           childObj,
@@ -50,22 +50,22 @@ export class Connections implements FlowPlugin {
           endDotIndex,
           this.data.flow.scale,
           this.data.flow.panX,
-          this.data.flow.panY
+          this.data.flow.panY,
         );
 
         // we need to reverse the path because the arrow head is at the end
         arrow.d = this.data.flow.arrowFn(
           endDot,
           startDot,
-          this.data.flow.config.ArrowSize,
-          2
+          this.data.flow.config.arrows ? this.data.flow.config.arrowSize : 0,
+          2,
         );
       }
 
       // Update the SVG paths
       this.data.flow.arrows.forEach((arrow) => {
         const pathElement = gElement.querySelector(
-          `#${arrow.id}`
+          `#${arrow.id}`,
         ) as SVGPathElement;
         if (pathElement) {
           pathElement.setAttribute('d', arrow.d);
@@ -79,13 +79,13 @@ export class Connections implements FlowPlugin {
   private setData(data: FlowComponent) {
     this.data = data;
     this.list = data.list;
-    this.direction = data.flow.direction;
+    this.direction = data.flow.config.direction!;
     this.setReverseDepsMap(this.list.map((x) => x.position));
   }
 
   public getClosestDotsSimplified(
     item: ChildInfo,
-    dep: string
+    dep: string,
   ): [number, number] {
     const ids = [
       ...item.position.deps,
@@ -107,7 +107,7 @@ export class Connections implements FlowPlugin {
 
   private findClosestDot(
     depId: string,
-    item: ChildInfo
+    item: ChildInfo,
     // childObj: Record<string, { dots: DOMRect[] }>
   ) {
     const uniqueKey1 = `${item.position.id}-${depId}`;
@@ -127,7 +127,7 @@ export class Connections implements FlowPlugin {
 
   public _findClosestConnectionPoints(
     parent: ChildInfo,
-    child: ChildInfo
+    child: ChildInfo,
   ): [number, number] {
     // sides dot index order: [top, right, bottom, left]
     let swapped = false;
@@ -161,7 +161,7 @@ export class Connections implements FlowPlugin {
   private getDirection(
     child: ChildInfo,
     parent: ChildInfo,
-    isV: boolean
+    isV: boolean,
   ): 'right' | 'left' | 'bottom' | 'top' {
     // consider width and height of the child
     const { width, height } = child.elRect;
@@ -190,7 +190,7 @@ export class Connections implements FlowPlugin {
       dots.forEach((dot, index) => {
         // Check if the current dot is the closest for any dependency
         const isClosestForAnyDep = Array.from(this.closestDots.keys()).some(
-          (key) => key.startsWith(id) && this.closestDots.get(key) === index
+          (key) => key.startsWith(id) && this.closestDots.get(key) === index,
         );
 
         dot.nativeElement.style.visibility = isClosestForAnyDep
@@ -206,7 +206,7 @@ export class Connections implements FlowPlugin {
     dotIndex: number,
     scale: number,
     panX: number,
-    panY: number
+    panY: number,
   ): DotOptions {
     const child = childObj[item.id];
     const childDots = child.dots as DOMRect[];

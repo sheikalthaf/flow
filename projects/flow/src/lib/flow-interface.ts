@@ -5,11 +5,17 @@ export interface ChildInfo {
   elRect: DOMRect;
 }
 
-export interface FlowOptions {
+export class FlowOptions {
   x: number;
   y: number;
   id: string;
   deps: string[];
+  constructor(options: FlowOptions) {
+    this.x = options.x;
+    this.y = options.y;
+    this.id = options.id;
+    this.deps = options.deps;
+  }
 }
 
 export interface DotOptions extends FlowOptions {
@@ -29,5 +35,5 @@ export type ArrowPathFn = (
   start: DotOptions,
   end: DotOptions,
   arrowSize: number,
-  strokeWidth: number
+  strokeWidth: number,
 ) => string;
